@@ -20,9 +20,7 @@ INTERNAL_IPS = [
 ]
 
 
-INSTALLED_APPS = INSTALLED_APPS + [
-    'django_extensions',
-]
+INSTALLED_APPS = INSTALLED_APPS + []
 
 
 MIDDLEWARE = MIDDLEWARE + []

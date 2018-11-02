@@ -42,16 +42,25 @@ if 'eth0' in ni.interfaces():
 # Application definition
 
 INSTALLED_APPS = [
+    # Django admin
     'grappelli',
     'django.contrib.admin',
+
+    # Django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third-Party
+    'taggit',
     'tinymce',
+    'storages',
+    'imagekit',
+    'django_extensions',
 
+    # local apps
     'core',
 ]
 
@@ -75,6 +84,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.media',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -132,6 +142,45 @@ STATIC_ROOT = os.path.join(APP_DIR, 'assets', 'static')
 MEDIA_URL = '/assets/media/'
 STATIC_URL = '/assets/static/'
 
+# django-imagekig
+#
+# https://django-imagekit.readthedocs.io/en/latest/configuration.html
+#
+#  IMAGEKIT_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
+IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash'
+
+# tinymce
+#
+# https://django-tinymce.readthedocs.io/en/latest/search.html?q=TINYMCE_DEFAULT_CONFIG&check_keywords=yes&area=default
+#
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 756,
+    'width': 1024,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    #  'theme': "simple", 'relative_urls': False,
+    #  'plugins': '''
+    #  textcolor save link image media preview codesample contextmenu
+    #  table code lists fullscreen  insertdatetime  nonbreaking
+    #  contextmenu directionality searchreplace wordcount visualblocks
+    #  visualchars code fullscreen autolink lists  charmap print  hr
+    #  anchor pagebreak
+    #  ''',
+    'toolbar1': '''
+    fullscreen preview bold italic underline | fontselect,
+    fontsizeselect  | forecolor backcolor | alignleft alignright |
+    aligncenter alignjustify | indent outdent | bullist numlist table |
+    | link image media | codesample |
+    ''',
+    'toolbar2': '''
+    visualblocks visualchars |
+    charmap hr pagebreak nonbreaking anchor |  code |
+    ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+}
 
 # Logging
 #

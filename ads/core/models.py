@@ -1,6 +1,13 @@
+import hashlib
+
 from django.db import models
 from django.conf import settings
 
+from django_extensions.db.fields import AutoSlugField
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 from tinymce.models import HTMLField
 
 from core import basemodel
@@ -8,7 +15,12 @@ from core import basemodel
 
 class Category(basemodel.BaseModel):
     name = models.CharField(max_length=255, null=False)
-    slug = models.SlugField(null=False)
+    slug = AutoSlugField(
+        null=False, unique=True, editable=True,
+        populate_from=['name'],
+        help_text='!! must not be edited after publish !!'
+    )
+
     parent = models.ForeignKey(
         'self', blank=True, null=True,
         related_name='children', on_delete=models.CASCADE
@@ -29,6 +41,9 @@ class Category(basemodel.BaseModel):
         post.  use __unicode__ in place of
         __str__ if you are using python 2
         """
+        return ' -> '.join(self.paths())
+
+    def paths(self):
         full_path = [self.name]
 
         k = self.parent
@@ -36,7 +51,30 @@ class Category(basemodel.BaseModel):
             full_path.append(k.name)
             k = k.parent
 
-        return ' -> '.join(full_path[::-1])
+        return full_path[::-1]
+
+
+class PostsTag(TaggedItemBase):
+    post_id = models.IntegerField(
+        db_index=True, null=False
+    )
+    content_object = models.ForeignKey(
+        'Post', null=False,
+        related_name='posts_tags', on_delete=models.CASCADE
+    )
+
+    class Meta:
+        db_table = 'posts_tags'
+
+    def save(self, *args, **kwargs):
+        self.post_id = self.content_object.id
+        super().save(*args, **kwargs)
+
+
+def _upload_to(instance, filename):
+    ins = instance
+    path = ins.slug or hashlib.md5(ins.title.encode()).hexdigest()
+    return f'posts/{path}/{filename}'
 
 
 class Post(basemodel.BaseModel):
@@ -49,21 +87,58 @@ class Post(basemodel.BaseModel):
         related_name='posts', on_delete=models.CASCADE
     )
 
+    external_link = models.URLField(
+        null=True, blank=True, max_length=255,
+        help_text='''
+        !! if this value is existance,
+        atag link will be set external site !!
+        '''
+    )
+    slug = AutoSlugField(
+        unique=True, null=False, editable=True,
+        populate_from=['created_at', 'category_slug', 'title'],
+        help_text='!! must not be edited after publish !!'
+    )
+
     title = models.CharField(max_length=255, null=False)
-    content = HTMLField('Content', null=False)
+    content = HTMLField('Content', null=True, blank=True)
 
-    slug = models.SlugField(unique=True, null=False)
-    draft = models.BooleanField(default=False, null=False)
+    image = models.ImageField(
+        "Image", null=False, upload_to=_upload_to
+    )  # blank=True,
 
-    publish = models.DateField(
+    publish = models.BooleanField(default=False, null=False)
+    publish_at = models.DateField(
         null=True, blank=True,
         auto_now=False, auto_now_add=False
     )
 
+    large = ImageSpecField(
+        source="image", format='JPEG',
+        processors=[ResizeToFill(1280, 1024)],
+    )
+    middle = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(600, 400)],
+        options={'quality': 75}
+    )
+    thumb = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(250, 250)],
+        options={'quality': 60}
+    )
+    small = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(75, 75)],
+        options={'quality': 50}
+    )
+
+    tags = TaggableManager(blank=True, through=PostsTag)
+
     class Meta:
         db_table = 'posts'
 
-    def get_cat_list(self):
+    def category_paths(self):
         """
         for now ignore this instance method,
         """
@@ -76,3 +151,9 @@ class Post(basemodel.BaseModel):
         for i in range(len(breadcrumb) - 1):
             breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
         return breadcrumb[-1:0:-1]
+
+    def category_slug(self):
+        if self.category:
+            return self.category.slug
+        return ''
+

@@ -13,6 +13,10 @@ django-tinymce = "*"
 ipython = "*"
 ipdb = "*"
 django-grappelli = "*"
+pillow = "*"
+django-storages = "*"
+django-imagekit = "*"
+django-taggit = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

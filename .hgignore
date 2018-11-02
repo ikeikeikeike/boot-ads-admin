@@ -102,4 +102,4 @@ tags
 *.sqlite3
 
 # my files
-/assets/*
+assets/*

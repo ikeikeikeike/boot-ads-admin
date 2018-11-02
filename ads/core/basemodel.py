@@ -3,17 +3,23 @@ from __future__ import unicode_literals
 from datetime import datetime as dt
 
 from django.db import models
+from django.db.models.fields import files
 from django.utils import timezone
 
 
 def asstr(dct):
     r = {}
     for k, v in dct.items():
-        if k not in ['_state', 'content', 'created_at', 'updated_at']:
-            if isinstance(v, dt):
-                r.update({k: str(v)})
-            else:
-                r.update({k: v})
+        if k in ['_state', 'content', 'created_at', 'updated_at']:
+            continue
+        if isinstance(v, files.ImageFieldFile):
+            continue
+
+        if isinstance(v, dt):
+            r.update({k: str(v)})
+        else:
+            r.update({k: v})
+
     return str(r)
 
 
