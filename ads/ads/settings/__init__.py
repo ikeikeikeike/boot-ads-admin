@@ -153,34 +153,87 @@ IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash
 #
 # https://django-tinymce.readthedocs.io/en/latest/search.html?q=TINYMCE_DEFAULT_CONFIG&check_keywords=yes&area=default
 #
+TINYMCE_JS_URL = 'https://cdn.tinymce.com/4/tinymce.min.js'
 TINYMCE_DEFAULT_CONFIG = {
     'height': 756,
     'width': 1024,
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 20,
+
     'selector': 'textarea',
-    #  'theme': "simple", 'relative_urls': False,
-    #  'plugins': '''
-    #  textcolor save link image media preview codesample contextmenu
-    #  table code lists fullscreen  insertdatetime  nonbreaking
-    #  contextmenu directionality searchreplace wordcount visualblocks
-    #  visualchars code fullscreen autolink lists  charmap print  hr
-    #  anchor pagebreak
-    #  ''',
-    'toolbar1': '''
-    fullscreen preview bold italic underline | fontselect,
-    fontsizeselect  | forecolor backcolor | alignleft alignright |
-    aligncenter alignjustify | indent outdent | bullist numlist table |
-    | link image media | codesample |
-    ''',
-    'toolbar2': '''
-    visualblocks visualchars |
-    charmap hr pagebreak nonbreaking anchor |  code |
-    ''',
-    'contextmenu': 'formats | link image',
-    'menubar': True,
+    'language': 'en',
+
+    'mode': "exact",
+    'theme': "modern",
+
+    'autosave_interval': "60s",
+    'visual': True,
+    'menubar': False,
     'statusbar': True,
+
+    'verify_html': False,
+    'inline_styles': True,
+    'valid_elements': 'a[href|target=_blank],strong/b,div[align],br',
+    'force_br_newlines': True,
+    'force_p_newlines': False,
+    'forced_root_block': '',
+    'paste_as_text': False,
+
+    'toolbar1': '''
+    restoredraft undo redo | formatselect | bold italic underline strikethrough | blockquote bullist numlist hr
+    | link unlink | table | imageupload image media | forecolor backcolor removeformat
+    | alignleft aligncenter alignright indent outdent | fullscreen | code
+    ''',
+
+    'plugins': '''
+    link image lists hr
+    code fullscreen media imageupload
+    table contextmenu textcolor autolink paste autosave save
+    ''',
+
+    'font_formats': 'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n',
+    'fontsize_formats': '6pt 8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+
+    'style_formats_merge': True,
+    'style_formats': [{
+        'title': "Margin", 'items': [
+            {'title': "10", 'selector': 'div', 'styles': {'margin': '10px'}},
+            {'title': "20", 'selector': 'div', 'styles': {'margin': '20px'}},
+            {'title': "30", 'selector': 'div', 'styles': {'margin': '30px'}},
+            {'title': "40", 'selector': 'div', 'styles': {'margin': '40px'}},
+            {'title': "50", 'selector': 'div', 'styles': {'margin': '50px'}},
+            {'title': "60", 'selector': 'div', 'styles': {'margin': '60px'}},
+            {'title': "70", 'selector': 'div', 'styles': {'margin': '70px'}},
+            {'title': "80", 'selector': 'div', 'styles': {'margin': '80px'}},
+            {'title': "90", 'selector': 'div', 'styles': {'margin': '90px'}},
+        ]
+    }, {
+        'title': "Padding", 'items': [
+            {'title': "10", 'selector': 'div', 'styles': {'padding': '10px'}},
+            {'title': "20", 'selector': 'div', 'styles': {'padding': '20px'}},
+            {'title': "30", 'selector': 'div', 'styles': {'padding': '30px'}},
+            {'title': "40", 'selector': 'div', 'styles': {'padding': '40px'}},
+            {'title': "50", 'selector': 'div', 'styles': {'padding': '50px'}},
+            {'title': "60", 'selector': 'div', 'styles': {'padding': '60px'}},
+            {'title': "70", 'selector': 'div', 'styles': {'padding': '70px'}},
+            {'title': "80", 'selector': 'div', 'styles': {'padding': '80px'}},
+            {'title': "90", 'selector': 'div', 'styles': {'padding': '90px'}},
+        ]
+    }],
+
+    'image_advtab': True,
+    'relative_urls': False,
+    'remove_script_host': False,
+
 }
+
+TINYMCE_EXTRA_MEDIA = {
+    # 'css': {
+    #     'all': [],
+    # },
+    'js': [
+        ''
+    ],
+}
+
 
 # Logging
 #
