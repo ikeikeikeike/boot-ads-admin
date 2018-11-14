@@ -1,0 +1,73 @@
+{% load imagekit %}
+
+
+<meta name="csrf-token" content='{{ csrf_token }}'/>
+
+<div class='modal imageupload-modal' role="dialog" tabindex="-1">
+  <div class='modal-dialog modal-lg modal-xl modal-xxl' role="document">
+    <div class='modal-content'>
+
+      <div class='modal-header'>
+        <h4 class='modal-title'>Image Uploader</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class='modal-body'>
+        <ul id='myTab' class='nav nav-tabs' role="tablist" style='margin-bottom: 11px;'>
+          <li class='nav-item'>
+            <a id='imageupload-library' class='nav-link active' data-toggle="tab" href="#imageupload-library-content" role="tab">
+              Library
+            </a>
+          </li>
+          <li class='nav-item'>
+            <a id='imageupload-uploader' class='nav-link' data-toggle="tab" href="#imageupload-uploader-content" role="tab">
+              Upload
+            </a>
+          </li>
+        </ul>
+
+        <div class='tab-content'>
+          <div id='imageupload-library-content' class='tab-pane fade show active' role="tabpanel">
+            <table class='table table table-hover dataTable'>
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Filename</th>
+                  <th scope="col">Content Type</th>
+                  <th scope="col">Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for image in images %}
+                <tr role="row" class="odd pointer">
+                  <td name='image'><img src='{{ image.image.url }}' width='100' height='75' /></td>
+                  <td name='name'>{{ image.name }}</td>
+                  <td name='mime'>unknown</td>
+                  <td name='size'>{{ image.image.size }}bytes</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div id='imageupload-uploader-content' class='tab-pane fade' role="tabpanel">
+            <div id='mydropzone' class='drag-and-drop-area drag-and-drop-area-out' data-url='{% url "post:uploadimage" %}'>
+              <span>
+                <i class='fa fa-image'></i>  Drag and drop your files (you can upload multiple image)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='modal-footer'>
+        <button class='btn btn-block btn-secondary' data-dismiss="modal" type="button">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

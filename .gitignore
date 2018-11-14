@@ -101,6 +101,13 @@ tags
 /ads/ads/settings/local.py
 
 # my files
-/assets/*
-
 /.hg
+/assets/*
+/node_modules
+
+vendor.min.css
+vendor.min.js
+app.min.css
+app.min.js
+prepared.min.css
+prepared.min.js

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 
     # local apps
     'core',
+    'post',
 ]
 
 MIDDLEWARE = [
@@ -79,12 +80,15 @@ ROOT_URLCONF = 'ads.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            pjoin(APP_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -92,6 +96,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'ads.wsgi.application'
 
@@ -159,7 +164,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 1024,
 
     'selector': 'textarea',
-    'language': 'en',
+    'language': 'ja',
 
     'mode': "exact",
     'theme': "modern",
@@ -222,15 +227,20 @@ TINYMCE_DEFAULT_CONFIG = {
     'image_advtab': True,
     'relative_urls': False,
     'remove_script_host': False,
-
 }
 
+
 TINYMCE_EXTRA_MEDIA = {
-    # 'css': {
-    #     'all': [],
-    # },
+    'css': {
+        'all': [
+            'css/vendor.min.css',
+            'css/app.min.css',
+        ],
+    },
     'js': [
-        ''
+        'js/prepared.min.js',
+        'js/vendor.min.js',
+        'js/app.min.js',
     ],
 }
 

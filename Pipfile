@@ -17,10 +17,10 @@ pillow = "*"
 django-storages = "*"
 django-imagekit = "*"
 django-taggit = "*"
+django-extensions = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
-django-extensions = "*"
 pytest = "*"
 coverage = "*"
 pytest-django = "*"

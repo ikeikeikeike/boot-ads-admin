@@ -27,7 +27,10 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     path('admin/', admin.site.urls),
+
+    url(r'^post/', include(('post.urls', 'post'), namespace='post')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

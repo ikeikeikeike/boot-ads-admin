@@ -1,0 +1,38 @@
+
+
+.drag-and-drop-area {
+  color: #ccc;
+  height: 200px;
+  margin: 30px 0 20px;
+  border-style: dashed;
+  border-width: 4px;
+  line-height: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.drag-and-drop-area-over {
+  border-color: #0000FF;
+}
+
+.drag-and-drop-area-over span {
+  opacity: 0.2;
+}
+
+.drag-and-drop-area-out {
+  border-color: #ccc;
+}
+
+.drag-and-drop-area-out span {
+  opacity: 1;
+}
+
+.drag-and-drop-area-out.dz-drag-hover {
+  border-color: #057aff;
+}
+
+.drag-and-drop-area.dz-drag-hover {
+  color: #000;
+}
+
+
