@@ -18,13 +18,13 @@ def imageform(request):
 @decorators.login_required
 def uploadimage(request):
     paths, u = [], request.user
-    for _, img in request.FILES.items():
-        kargs = dict(name=img.name, image=img, user=u)
+    for _, i in request.FILES.items():
+        kargs = dict(name=i.name, mime=i.content_type, image=i, user=u)
 
-        image = models.Image.objects.create(**kargs)
+        img = models.Image.objects.create(**kargs)
         for group in u.groups.all():
-            image.groups.add(group)
+            img.groups.add(group)
 
-        paths.append(image.image.url)
+        paths.append(img.image.url)
 
     return http.JsonResponse({'paths': paths})

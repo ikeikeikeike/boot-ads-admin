@@ -35,9 +35,8 @@ const modalfun = (data) => {
 
   $modal            = $(".imageupload-modal");
   const $table      = $("#imageupload-library-content table");
-
-  const initEvent  = (opt) => {
-    $table.find('tr').on('click', function() {
+  const initEvent   = (opt) => {
+    $table.find('tbody').on('click', 'tr', function() {
       const $this = $(this)
       insertContent(
         $this.find('img').attr('src'),
@@ -47,6 +46,7 @@ const modalfun = (data) => {
       $modal.modal('toggle');
     })
   }
+
   const insertContent = (src, filename) => {
     const img = `<img src="${src}" alt="${filename}" />`
     tinymce.activeEditor.insertContent(img)

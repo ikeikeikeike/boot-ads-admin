@@ -2,6 +2,7 @@ import hashlib
 
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import models as authmodel
 
 from django_extensions.db.fields import AutoSlugField
 from imagekit.models import ImageSpecField
@@ -11,6 +12,56 @@ from taggit.models import TaggedItemBase
 from tinymce.models import HTMLField
 
 from core import basemodel
+
+
+def _upload_to_image(instance, filename):
+    ins = instance
+    pre = ins.__class__.__name__.lower()
+    path = ins.name or ins.image.url
+    return f'{pre}/{path}/{filename}'
+
+
+class Image(basemodel.BaseModel):
+    """
+    Image Storages
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, default=1, null=False,
+        related_name='images', on_delete=models.CASCADE
+    )
+    groups = models.ManyToManyField(
+        authmodel.Group, related_name='images'
+    )
+
+    name = models.CharField(max_length=255, null=False)
+    mime = models.CharField(max_length=64, null=False, default='')
+
+    image = models.ImageField(
+        "Image", null=False, upload_to=_upload_to_image
+    )  # blank=True,
+
+    large = ImageSpecField(
+        source="image", format='JPEG',
+        processors=[ResizeToFill(1280, 1024)],
+    )
+    middle = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(600, 400)],
+        options={'quality': 75}
+    )
+    thumb = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(250, 250)],
+        options={'quality': 60}
+    )
+    small = ImageSpecField(
+        source='image', format="JPEG",
+        processors=[ResizeToFill(75, 75)],
+        options={'quality': 50}
+    )
+
+    class Meta:
+        db_table = 'images'
 
 
 class Category(basemodel.BaseModel):
@@ -71,10 +122,11 @@ class PostsTag(TaggedItemBase):
         super().save(*args, **kwargs)
 
 
-def _upload_to(instance, filename):
+def _upload_to_post(instance, filename):
     ins = instance
+    pre = ins.__class__.__name__.lower()
     path = ins.slug or hashlib.md5(ins.title.encode()).hexdigest()
-    return f'posts/{path}/{filename}'
+    return f'{pre}/{path}/{filename}'
 
 
 class Post(basemodel.BaseModel):
@@ -104,7 +156,7 @@ class Post(basemodel.BaseModel):
     content = HTMLField('Content', null=True, blank=True)
 
     image = models.ImageField(
-        "Image", null=False, upload_to=_upload_to
+        "Image", null=False, upload_to=_upload_to_post
     )  # blank=True,
 
     publish = models.BooleanField(default=False, null=False)
@@ -156,4 +208,3 @@ class Post(basemodel.BaseModel):
         if self.category:
             return self.category.slug
         return ''
-

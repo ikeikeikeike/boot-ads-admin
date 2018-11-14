@@ -44,7 +44,7 @@
                 <tr role="row" class="odd pointer">
                   <td name='image'><img src='{{ image.image.url }}' width='100' height='75' /></td>
                   <td name='name'>{{ image.name }}</td>
-                  <td name='mime'>unknown</td>
+                  <td name='mime'>{{ image.mime }}</td>
                   <td name='size'>{{ image.image.size }}bytes</td>
                 </tr>
                 {% endfor %}

@@ -5,6 +5,29 @@ from imagekit.admin import AdminThumbnail
 from . import models
 
 
+class ImageAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'group_list', 'user', 'name', 'mime', 'admin_image', 'created_at', 'updated_at'
+    )
+    list_filter = ('user', 'groups', 'created_at', 'updated_at')
+    list_display_links = ('id', 'name', )
+    search_fields = ('id', 'name', )
+    ordering = ['-id']
+
+    admin_image = AdminThumbnail(image_field='small')
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return '<img src="%s" />' % obj.image.url
+        return ""
+    image_thumbnail.allow_tags = True
+    image_thumbnail.short_description = "Thumbnail"
+
+    def group_list(self, obj):
+        return u", ".join(o.name for o in obj.groups.all())
+    group_list.short_description = "groups"
+
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'id', '__str__', 'name', 'slug', 'parent',
@@ -65,4 +88,5 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Post, PostAdmin)
+admin.site.register(models.Image, ImageAdmin)
 admin.site.register(models.Category, CategoryAdmin)

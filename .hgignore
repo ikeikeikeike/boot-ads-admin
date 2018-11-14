@@ -103,3 +103,4 @@ tags
 
 # my files
 assets/*
+ui/node_modules

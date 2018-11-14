@@ -161,7 +161,7 @@ IMAGEKIT_SPEC_CACHEFILE_NAMER = 'imagekit.cachefiles.namers.source_name_dot_hash
 TINYMCE_JS_URL = 'https://cdn.tinymce.com/4/tinymce.min.js'
 TINYMCE_DEFAULT_CONFIG = {
     'height': 756,
-    'width': 1024,
+    'width': 1300,
 
     'selector': 'textarea',
     'language': 'ja',
