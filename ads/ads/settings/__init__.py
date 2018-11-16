@@ -171,7 +171,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
     'autosave_interval': "60s",
     'visual': True,
-    'menubar': False,
+    'menubar': True,
     'statusbar': True,
 
     'verify_html': False,
