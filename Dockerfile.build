@@ -1,0 +1,55 @@
+# push as ikeikeikeike/boot-ads:built-admin
+
+FROM gradle:jdk8-slim
+USER root
+
+WORKDIR /built/boot-ads
+
+COPY ./ ./
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+                software-properties-common \
+                curl \
+                sudo \
+                apt-transport-https \
+                ca-certificates \
+                wget \
+                git \
+                rsync \
+                bzip2 \
+                gcc \
+                g++ \
+                zip \
+                bash \
+                make \
+                openssl \
+                libssl-dev \
+                make \
+                default-mysql-client \
+                default-libmysqlclient-dev \
+                mysql-client \
+                mysql-common \
+                libpq-dev \
+                redis-tools \
+                redis-server \
+                gnupg \
+                imagemagick \
+                libmagickwand-dev \
+                gnupg2 \
+                gnupg1 \
+                build-essential \
+        && \
+    curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - \
+        && \
+    apt-get update && apt-get install -y --no-install-recommends nodejs  \
+        && \
+    npm install -g npm@latest yarn \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /built/boot-ads/ads
+RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescript@3.1.6 && npm link gulp) \
+          && \
+    (cd ./ui && NODE_ENV=production gulp build) \
+          && \
+    gradle clean build -x test -Penv=production
