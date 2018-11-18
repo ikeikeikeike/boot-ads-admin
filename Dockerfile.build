@@ -1,6 +1,6 @@
 # push as ikeikeikeike/boot-ads:built-admin
 
-FROM gradle:jdk8-slim
+FROM python:3.7-slim
 USER root
 
 WORKDIR /built/boot-ads
@@ -47,9 +47,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /built/boot-ads/ads
+WORKDIR /built/boot-ads/admin
 RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescript@3.1.6 && npm link gulp) \
           && \
     (cd ./ui && NODE_ENV=production gulp build) \
           && \
-    gradle clean build -x test -Penv=production
+    pip install pipenv && pipenv install
