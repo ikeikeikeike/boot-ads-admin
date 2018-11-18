@@ -41,7 +41,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         && \
     curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - \
         && \
-    apt-get update && apt-get install -y --no-install-recommends nodejs  \
+    apt-get update && apt-get install -y --no-install-recommends nodejs \
         && \
     npm install -g npm@latest yarn \
         && \
@@ -52,4 +52,6 @@ RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescrip
           && \
     (cd ./ui && npm install && NODE_ENV=production gulp build) \
           && \
-    pip install pipenv && pipenv install
+    pip install pipenv && PIPENV_VENV_IN_PROJECT=true pipenv install \
+          && \
+    (cd ./ads && DJANGO_SETTINGS_MODULE=ads.settings /built/boot-ads/admin/.venv/bin/python manage.py collectstatic --noinput)

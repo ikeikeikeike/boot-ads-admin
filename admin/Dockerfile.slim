@@ -1,0 +1,24 @@
+FROM ikeikeikeike/boot-ads:built-admin as noci
+WORKDIR /workspace/boot-ads/admin
+
+COPY ./ ./
+
+RUN cp -Pr /built/boot-ads/admin/.venv /workspace/boot-ads/admin/ \
+  && cp -Pr /built/boot-ads/admin/ui/node_modules /workspace/boot-ads/admin/ui/
+RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescript@3.1.6 && npm link gulp) \
+          && \
+    (cd ./ui && npm install && NODE_ENV=production gulp build) \
+          && \
+    PIPENV_VENV_IN_PROJECT=true pipenv install \
+          && \
+    (cd ./ads && DJANGO_SETTINGS_MODULE=ads.settings /workspace/boot-ads/admin/.venv/bin/python manage.py collectstatic --noinput)
+
+# main
+
+FROM ikeikeikeike/docker-python:3.7-slim
+WORKDIR /apps/boot-ads/admin
+
+COPY --from=noci /built/boot-ads/admin /apps/boot-ads/
+
+RUN apk add --no-cache bash \
+  && apk add -U --no-cache ca-certificates
