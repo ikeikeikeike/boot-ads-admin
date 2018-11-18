@@ -1,4 +1,5 @@
 *
 !admin
 admin/build
+admin/assets/*
 admin/ui/node_modules
