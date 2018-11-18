@@ -1,6 +1,6 @@
 'use strict'
 
-const del = require('del');
+// const del = require('del');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const runSequence = require('run-sequence');
