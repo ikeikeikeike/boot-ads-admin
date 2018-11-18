@@ -102,5 +102,5 @@ tags
 *.sqlite3
 
 # my files
-assets/*
-ui/node_modules
+admin/assets/*
+admin/ui/node_modules

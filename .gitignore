@@ -98,12 +98,12 @@ tags
 *.sqlite3
 
 # config
-/ads/ads/settings/local.py
+/admin/ads/ads/settings/local.py
 
 # my files
 /.hg
-/assets/*
-/node_modules
+/admin/assets/*
+/admin/node_modules
 
 vendor.min.css
 vendor.min.js
