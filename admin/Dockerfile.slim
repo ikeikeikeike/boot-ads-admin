@@ -1,22 +1,24 @@
 FROM ikeikeikeike/boot-ads:built-admin as noci
-WORKDIR /apps/boot-ads/admin
+WORKDIR /workspace/boot-ads/admin
+
+ENV DJANGO_SETTINGS_MODULE=ads.settings
 
 COPY ./ ./
 
-RUN cp -Pr /built/boot-ads/admin/.venv /apps/boot-ads/admin/ \
-  && cp -Pr /built/boot-ads/admin/ui/node_modules /apps/boot-ads/admin/ui/
+RUN cp -Pr /built/boot-ads/admin/venv /workspace/boot-ads/admin/ \
+  && cp -Pr /built/boot-ads/admin/ui/node_modules /workspace/boot-ads/admin/ui/
 
 RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescript@3.1.6 && npm link gulp) \
           && \
     (cd ./ui && npm install && NODE_ENV=production gulp build) \
           && \
-    PIPENV_VENV_IN_PROJECT=true pipenv install \
+    python -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt \
           && \
-    (cd ./ads && DJANGO_SETTINGS_MODULE=ads.settings /apps/boot-ads/admin/.venv/bin/python manage.py collectstatic --noinput)
+    (cd ./ads && /workspace/boot-ads/admin/venv/bin/python manage.py collectstatic --noinput)
 
 # main
 
 FROM ikeikeikeike/docker-python:3.7-slim
 WORKDIR /apps/boot-ads/admin
 
-COPY --from=noci /apps/boot-ads/admin /apps/boot-ads/admin
+COPY --from=noci /workspace/boot-ads/admin /apps/boot-ads/admin
