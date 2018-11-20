@@ -19,6 +19,3 @@ FROM ikeikeikeike/docker-python:3.7-slim
 WORKDIR /apps/boot-ads/admin
 
 COPY --from=noci /built/boot-ads/admin /apps/boot-ads/
-
-RUN apk add --no-cache bash \
-  && apk add -U --no-cache ca-certificates
