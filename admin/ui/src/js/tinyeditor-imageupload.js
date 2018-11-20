@@ -117,7 +117,7 @@ const modalfun = (data) => {
 }
 
 
-$.ajax({url: '/post/imageform', type: 'GET'})
+$.ajax({url: '/admin/post/imageform', type: 'GET'})
   .done(data => {
     modalfun(data)
   })

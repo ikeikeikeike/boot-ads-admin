@@ -3,7 +3,7 @@
 FROM python:3.7-slim
 USER root
 
-WORKDIR /built/boot-ads
+WORKDIR /apps/boot-ads
 
 COPY ./ ./
 
@@ -47,12 +47,12 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /built/boot-ads/admin
+WORKDIR /apps/boot-ads/admin
 ENV DJANGO_SETTINGS_MODULE=ads.settings
 RUN (cd ./ui && npm install -g gulp@3.9.1 typings@2.1.1 webpack@4.25.1 typescript@3.1.6 && npm link gulp) \
           && \
     (cd ./ui && npm install && NODE_ENV=production gulp build) \
           && \
-    python -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt \
+    pip install pipenv && PIPENV_VENV_IN_PROJECT=true pipenv install \
           && \
-    (cd ./ads && /built/boot-ads/admin/venv/bin/python manage.py collectstatic --noinput)
+    (cd ./ads && /apps/boot-ads/admin/.venv/bin/python manage.py collectstatic --noinput)

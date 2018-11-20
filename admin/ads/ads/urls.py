@@ -24,11 +24,11 @@ from django.conf.urls import (
 )
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/grappelli/', include('grappelli.urls')),
+    url(r'^admin/tinymce/', include('tinymce.urls')),
+    path('admin/site', admin.site.urls),
 
-    url(r'^post/', include(('post.urls', 'post'), namespace='post')),
+    url(r'^admin/post/', include(('post.urls', 'post'), namespace='post')),
 ]
 
 if settings.DEBUG:
