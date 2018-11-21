@@ -3,10 +3,6 @@
 FROM python:3.7-slim
 USER root
 
-WORKDIR /apps/boot-ads
-
-COPY ./ ./
-
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
                 software-properties-common \
                 curl \
@@ -46,6 +42,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     npm install -g npm@latest yarn \
         && \
     rm -rf /var/lib/apt/lists/*
+
+WORKDIR /apps/boot-ads
+COPY ./ ./
 
 WORKDIR /apps/boot-ads/admin
 ENV DJANGO_SETTINGS_MODULE=ads.settings
