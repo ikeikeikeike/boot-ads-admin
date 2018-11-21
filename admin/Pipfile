@@ -14,7 +14,7 @@ ipython = "==7.1.1"
 ipdb = "==0.11"
 django-grappelli = "==2.12.1"
 pillow = "==5.3.0"
-django-storages = "==1.7.1"
+django-storages = {extras = ["google"], version = "==1.7.1"}
 django-imagekit = "==4.0.2"
 django-taggit = "==0.23.0"
 django-extensions = "==2.1.3"

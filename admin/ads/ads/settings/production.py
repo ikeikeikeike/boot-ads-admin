@@ -1,5 +1,7 @@
 import os
 
+from google.oauth2 import service_account
+
 from ads.settings import *  # NOQA
 from ads.settings import (
     INSTALLED_APPS,
@@ -53,38 +55,20 @@ CACHES = {
     },
 }
 
-
-LOGGING['handlers']['syslog'] = {
-    'level': 'INFO',
-    'class': 'logging.handlers.SysLogHandler',
-    'address': '/dev/log',
-    'formatter': 'syslog_verbose',
-}
-
-LOGGING['handlers']['syslog_error'] = {
-    'level': 'INFO',
-    'filters': ['require_debug_false'],
-    'class': 'logging.handlers.SysLogHandler',
-    'address': '/dev/log',
-    'formatter': 'syslog_verbose',
-}
-
-LOGGING['loggers']['syslog'] = {
-    'handlers': ['syslog', 'console', 'syslog_error'],
-    'level': 'INFO',
-    'propagate': False,
-}
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'fabg-storage-production'
+GS_DEFAULT_ACL = 'publicRead'
+GS_PROJECT_ID = os.environ['GOOGLE_PROJECT']
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.environ['GOOGLE_CREDENTIALS']
+)
 
 LOGGING['loggers'][''] = {
-    'handlers': ['console', 'syslog_error'],
-    'level': 'INFO',
+    'handlers': ['console'],
+    'level': 'WARNING',
     'propagate': True
 }
 
 LOGGING['loggers']['django']['level'] = 'INFO'
 LOGGING['loggers']['django.db.backends']['level'] = 'INFO'
 LOGGING['loggers'][LOGGING_PREFIX]['level'] = 'INFO'
-
-LOGGING['loggers']['django']['handlers'].append("syslog_error")
-LOGGING['loggers']['django.db.backends']['handlers'].append("syslog_error")
-LOGGING['loggers'][LOGGING_PREFIX]['handlers'].append("syslog_error")
