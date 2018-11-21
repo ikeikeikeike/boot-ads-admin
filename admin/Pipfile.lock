@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c0f09da67ee9567e6dd5485659d6bfffbed47c76fd26ccce44df2bffa7ffd6b1"
+            "sha256": "c4d0472d6de8bef3116b3d8eeec26a0025e2f46a2af2f4e5a672f58938e2b472"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -114,9 +114,6 @@
             "version": "==4.0.2"
         },
         "django-storages": {
-            "extras": [
-                "google"
-            ],
             "hashes": [
                 "sha256:8e35d2c7baeda5dc6f0b4f9a0fc142d25f9a1bf72b8cebfcbc5db4863abc552d",
                 "sha256:b1a63cd5ea286ee5a9fb45de6c3c5c0ae132d58308d06f1ce9865cfcd5e470a7"
@@ -173,7 +170,7 @@
                 "sha256:936c859c47f8e94fd0005e98235a10d5e75828d2c6c3a8caacae18344a572a0a",
                 "sha256:fc32b9be41a45016ba2387e3ad23e70ccba399d626ef596409316f7cee477956"
             ],
-            "markers": "extra == 'google'",
+            "index": "pypi",
             "version": "==1.13.0"
         },
         "google-resumable-media": {
