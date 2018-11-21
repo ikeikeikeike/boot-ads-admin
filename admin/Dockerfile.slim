@@ -23,4 +23,4 @@ WORKDIR /apps/boot-ads/admin
 
 COPY --from=noci /workspace/boot-ads/admin /apps/boot-ads/admin
 
-RUN . /apps/boot-ads/admin/.venv/bin/activate && pip uninstall mysqlclient -y && pip install mysqlclient
+RUN . /apps/boot-ads/admin/.venv/bin/activate && pip uninstall mysqlclient -y && pip install mysqlclient google
