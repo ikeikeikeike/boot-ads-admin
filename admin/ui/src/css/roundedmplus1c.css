@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Rounded Mplus 1c Thin'), local('RoundedMplus1c-Thin'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNOjORWPa_DWpyxyUCMwBCdF7nsoCs3GVKT.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Rounded Mplus 1c Light'), local('RoundedMplus1c-Light'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNPjORWPa_DWpyxyUCMwBCdF7nsoOMlDnWzYg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Rounded Mplus 1c'), local('RoundedMplus1c-Regular'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNIjORWPa_DWpyxyUCMwBCdF7nsqEgHHg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Rounded Mplus 1c Medium'), local('RoundedMplus1c-Medium'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNPjORWPa_DWpyxyUCMwBCdF7nsoLskDnWzYg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Rounded Mplus 1c Bold'), local('RoundedMplus1c-Bold'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNPjORWPa_DWpyxyUCMwBCdF7nsoPMiDnWzYg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Rounded Mplus 1c ExtraBold'), local('RoundedMplus1c-ExtraBold'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNPjORWPa_DWpyxyUCMwBCdF7nsoO8hDnWzYg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rounded Mplus 1c';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Rounded Mplus 1c Black'), local('RoundedMplus1c-Black'), url(https://fonts.gstatic.com/s/roundedmplus1c/v2/ZgNPjORWPa_DWpyxyUCMwBCdF7nsoMsgDnWzYg.ttf) format('truetype');
+}
