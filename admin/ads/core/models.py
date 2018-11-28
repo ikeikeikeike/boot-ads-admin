@@ -156,7 +156,7 @@ class Post(basemodel.BaseModel):
     content = HTMLField('Content', null=True, blank=True)
 
     image = models.ImageField(
-        "Image", null=False, upload_to=_upload_to_post
+        "Image", null=True, blank=True, upload_to=_upload_to_post
     )  # blank=True,
 
     publish = models.BooleanField(default=False, null=False)
