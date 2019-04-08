@@ -18,17 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from django.conf.urls import (
-    include,
-    url
-)
+from django.conf.urls import include
 
 urlpatterns = [
-    path('admin/grappelli/', include('grappelli.urls')),
-    url(r'^admin/tinymce/', include('tinymce.urls')),
-    path('admin/site', admin.site.urls),
-
-    url(r'^admin/post/', include(('post.urls', 'post'), namespace='post')),
+    path('manage/grappelli/', include('grappelli.urls')),
+    path('manage/tinymce/', include('tinymce.urls')),
+    path('manage/admin/', admin.site.urls),
+    path('manage/post/', include(('post.urls', 'post'), namespace='post')),
 ]
 
 if settings.DEBUG:
